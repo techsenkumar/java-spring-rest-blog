@@ -18,11 +18,18 @@ public class Author {
     private Long id;
     private String firstname;
     private String lastname;
+    @JsonIgnore
     private String username;
+    @JsonIgnore
     private String password;
+    @OneToMany
+    private List<Post> posts;
+    @Version
+    private Long version;
 
     public Author() {
         super();
+        posts = new ArrayList<>();
     }
 
     public Author(String username, String firstname, String lastname, String password) {
@@ -33,7 +40,11 @@ public class Author {
         setPassword(password);
     }
 
-    public void setPassword(String password) {
+    public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
+	public void setPassword(String password) {
          this.password = PASSWORD_ENCODER.encode(password);
     }
 
@@ -68,6 +79,14 @@ public class Author {
     public String getPassword() {
         return password;
     }
+    
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void addPost(Post post) {
+//        this.posts = post;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -84,11 +103,5 @@ public class Author {
         return true;
     }
 
-    public List<Post> getPosts() {
-        return null;
-    }
-
-    public void addPost(Post post) {
-        return;
-    }
+    
 }
